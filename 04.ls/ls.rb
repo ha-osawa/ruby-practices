@@ -14,7 +14,7 @@ FILE_TYPES = {
   'blockSpecial' => 'b',
   'fifo' => 'p',
   'socket' => 's'
-}
+}.freeze
 
 PERMISSIONS = {
   '0' => '---',
@@ -25,7 +25,7 @@ PERMISSIONS = {
   '5' => 'r-x',
   '6' => 'rw-',
   '7' => 'rwx'
-}
+}.freeze
 
 def main
   files, option, max_filename_length, files_status, total_block = make_files
