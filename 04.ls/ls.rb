@@ -125,7 +125,7 @@ def make_file_status(files_stat, max_length)
       "#{file_stat.nlink.to_s.rjust(max_length[:nlink])} " <<
       Etc.getpwuid(file_stat.uid).name.ljust(max_length[:user_name] + 2) <<
       Etc.getgrgid(file_stat.gid).name.ljust(max_length[:group_name] + 2) <<
-      "#{file_stat.size.to_s.rjust(max_length[:file_size])}  " \
+      "#{file_stat.size.to_s.rjust(max_length[:file_size])} " \
       "#{file_stat.mtime.strftime('%_m %_d %H:%M')} "
   end
 end
@@ -133,7 +133,7 @@ end
 def output_files_with_status(files, files_status, total_block)
   puts "total #{total_block}"
   files_status.each_with_index do |files_with_status, files_index|
-    puts "#{files_with_status} #{files[files_index]}"
+    puts "#{files_with_status}#{files[files_index]}"
   end
 end
 
