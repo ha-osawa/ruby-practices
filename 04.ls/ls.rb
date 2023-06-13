@@ -103,8 +103,8 @@ def convert_permission(permission)
 end
 
 def generate_permission(file_stat)
-  converted_permission = file_stat.mode.to_s(8).slice(-3..-1).chars.map { |permission| convert_permission(permission) }
-  converted_permission.inject { |result, permission| result + permission }
+  converted_permissions = file_stat.mode.to_s(8).slice(-3..-1).chars.map { |permission| convert_permission(permission) }
+  converted_permissions.inject { |result, permission| result + permission }
 end
 
 def convert_file_type(ftype)
