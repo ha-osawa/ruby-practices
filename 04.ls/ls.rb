@@ -6,6 +6,27 @@ require 'etc'
 
 OUTPUT_COLUMN_NUMBER = 3
 
+FILE_TYPES = {
+  'directory' => 'd',
+  'file' => '-',
+  'link' => 'l',
+  'characterSpecial' => 'c',
+  'blockSpecial' => 'b',
+  'fifo' => 'p',
+  'socket' => 's'
+}
+
+PERMISSIONS = {
+  '0' => '---',
+  '1' => '--x',
+  '2' => '-w-',
+  '3' => '-wx',
+  '4' => 'r--',
+  '5' => 'r-x',
+  '6' => 'rw-',
+  '7' => 'rwx'
+}
+
 def main
   files, option, max_filename_length, files_status, total_block = make_files
   output(files, option, max_filename_length, files_status, total_block)
@@ -78,17 +99,7 @@ def calc_total_block(files_stat)
 end
 
 def convert_permission(permission)
-  permissions = {
-    '0' => '---',
-    '1' => '--x',
-    '2' => '-w-',
-    '3' => '-wx',
-    '4' => 'r--',
-    '5' => 'r-x',
-    '6' => 'rw-',
-    '7' => 'rwx'
-  }
-  permissions[permission]
+  PERMISSIONS[permission]
 end
 
 def generate_permission(file_stat)
@@ -97,16 +108,7 @@ def generate_permission(file_stat)
 end
 
 def convert_file_type(ftype)
-  file_types = {
-    'directory' => 'd',
-    'file' => '-',
-    'link' => 'l',
-    'characterSpecial' => 'c',
-    'blockSpecial' => 'b',
-    'fifo' => 'p',
-    'socket' => 's'
-  }
-  file_types[ftype]
+  FILE_TYPES[ftype]
 end
 
 def generate_max_length(files_stat)
