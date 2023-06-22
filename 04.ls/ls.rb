@@ -43,6 +43,7 @@ end
 def make_files
   option = parse_option
   files = create_file_list(make_absolute_path).compact.sort
+  files = files.reverse if option[:r]
   if option[:l]
     files_stat = create_files_stat(files)
     total_block = calc_total_block(files_stat)
@@ -60,6 +61,7 @@ def parse_option
   option = {}
   opt = OptionParser.new
   opt.on('-l')
+  opt.on('-r')
   opt.parse!(ARGV, into: option)
   option
 end
