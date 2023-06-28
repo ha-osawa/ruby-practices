@@ -42,8 +42,7 @@ end
 
 def make_files
   option = parse_option
-  files = create_file_list(option, make_absolute_path).compact.sort
-  files = files.reverse if option[:r]
+  files = create_file_list(option, make_absolute_path)
   if option[:l]
     files_stat = create_files_stat(files)
     total_block = calc_total_block(files_stat)
@@ -73,7 +72,9 @@ end
 
 def create_file_list(option, absolute_path)
   Dir.chdir(absolute_path)
-  option[:a] ? Dir.glob('*', File::FNM_DOTMATCH).map.to_a : Dir.glob('*').map.to_a
+  file_list = option[:a] ? Dir.glob('*', File::FNM_DOTMATCH).map.to_a : Dir.glob('*').map.to_a
+  file_list = file_list.reverse if option[:r]
+  file_list
 end
 
 def align_files(sorted_files)
