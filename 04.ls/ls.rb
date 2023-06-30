@@ -72,7 +72,7 @@ end
 
 def create_file_list(option, absolute_path)
   Dir.chdir(absolute_path)
-  file_list = option[:a] ? Dir.glob('*', File::FNM_DOTMATCH).map.to_a : Dir.glob('*').map.to_a
+  file_list = option[:a] ? Dir.glob('*', File::FNM_DOTMATCH) : Dir.glob('*')
   file_list = file_list.reverse if option[:r]
   file_list
 end
