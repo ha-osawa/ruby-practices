@@ -42,7 +42,7 @@ end
 
 def make_files
   option = parse_option
-  files = create_file_list(make_absolute_path).compact.sort
+  files = create_file_list(option, make_absolute_path)
   if option[:l]
     files_stat = create_files_stat(files)
     total_block = calc_total_block(files_stat)
@@ -60,6 +60,8 @@ def parse_option
   option = {}
   opt = OptionParser.new
   opt.on('-l')
+  opt.on('-r')
+  opt.on('-a')
   opt.parse!(ARGV, into: option)
   option
 end
@@ -68,9 +70,11 @@ def make_absolute_path
   File.expand_path(ARGV[0] || '.')
 end
 
-def create_file_list(absolute_path)
+def create_file_list(option, absolute_path)
   Dir.chdir(absolute_path)
-  Dir.glob('*').map.to_a
+  file_list = option[:a] ? Dir.glob('*', File::FNM_DOTMATCH) : Dir.glob('*')
+  file_list = file_list.reverse if option[:r]
+  file_list
 end
 
 def align_files(sorted_files)
